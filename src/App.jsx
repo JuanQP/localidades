@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { ActionIcon, Button, Card, Center, Container, Grid, Group, Text, TextInput, Tooltip } from "@mantine/core";
-import { IconArrowsShuffle, IconCheck, IconCopy, IconDownload } from '@tabler/icons';
+import { ActionIcon, Button, Card, Center, Container, Grid, Text, TextInput, Tooltip } from "@mantine/core";
+import { IconArrowsShuffle, IconCheck, IconDownload } from '@tabler/icons';
 import { pickRandom, randomBetween, setFieldValue } from './utils';
 import { Canvas } from './Canvas';
 
@@ -46,7 +46,7 @@ function App() {
   const [animal, setAnimal] = useState('');
   const [adjetivo, setAdjetivo] = useState('');
   const [kilometros, setKilometros] = useState('100');
-  const [recentlyCopied, setRecentlyCopied] = useState(false);
+  const [recentlyDownloaded, setRecentlyDownloaded] = useState(false);
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -81,25 +81,10 @@ function App() {
     link.download = `Cartel_${animal}-${adjetivo}.png`;
     link.href = url;
     link.click();
-  }
 
-  function handleCopyImage() {
-    const editedImage = document
-      .getElementById('edited-image')
-      .getElementsByTagName('img')[0]
-      .cloneNode(true);
-    let div = document.createElement('div');
-    div.contentEditable = true;
-    div.appendChild( editedImage );
-    document.body.appendChild( div );
-    div.focus();
-    window.getSelection().selectAllChildren( div );
-    document.execCommand('Copy');  // technically deprecated
-    document.body.removeChild( div );
-
-    setRecentlyCopied(true);
+    setRecentlyDownloaded(true);
     setTimeout(() => {
-      setRecentlyCopied(false);
+      setRecentlyDownloaded(false);
     }, 3000);
   }
 
@@ -167,27 +152,17 @@ function App() {
                   </Tooltip>
                 )}
               />
-              <Group grow>
-                <Button
-                  color={recentlyCopied ? 'green' : 'blue'}
-                  variant='light'
-                  mt="md"
-                  size='md'
-                  leftIcon={recentlyCopied ? <IconCheck size={18}/> : <IconCopy size={18} />}
-                  onClick={handleCopyImage}
+              <Button
+                fullWidth
+                color={recentlyDownloaded ? 'green' : 'blue'}
+                variant='light'
+                mt="md"
+                size='md'
+                leftIcon={recentlyDownloaded ? <IconCheck size={18}/> : <IconDownload size={18} />}
+                onClick={handleDownloadCanvas}
                 >
-                  {recentlyCopied ? "Listo!" : "Copiar"}
-                </Button>
-                <Button
-                  variant='light'
-                  mt="md"
-                  size='md'
-                  leftIcon={<IconDownload size={18} />}
-                  onClick={handleDownloadCanvas}
-                >
-                  Descargar
-                </Button>
-              </Group>
+                {recentlyDownloaded ? "Listo!" : "Descargar"}
+              </Button>
               <Button
                 fullWidth
                 variant='gradient'
