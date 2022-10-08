@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { ActionIcon, Button, Card, Center, Container, Grid, Text, TextInput, Tooltip } from "@mantine/core";
-import { IconArrowsShuffle, IconArrowUpLeft } from '@tabler/icons';
+import { IconArrowsShuffle } from '@tabler/icons';
 import { pickRandom, randomBetween, setFieldValue } from './utils';
+import { Canvas } from './Canvas';
 
 const animales = [
   "Oso Hormiguero",
@@ -12,7 +13,7 @@ const animales = [
   "Hornero",
   "Yarará",
   "Cóndor Andino",
-  "Armadillo Peludo",
+  "Armadillo",
   "Escuerzo",
   "Carpincho",
   "Aguará Guazú",
@@ -77,16 +78,20 @@ function App() {
       <Container size="xs" py="md">
         <Grid>
           <Grid.Col xs={12}>
+            <Canvas animal={animal} adjetivo={adjetivo} kilometros={kilometros} />
+          </Grid.Col>
+          <Grid.Col xs={12}>
             <Card shadow="sm">
               <Text weight={700}>Generador de Localidades Ficticias 📍🇦🇷</Text>
               <Text color="dimmed">
-                Elegí uno al azar o armalo vos mismo 👌
+                Elegí uno al azar o armalo vos mismo y descargalo! 👌
               </Text>
               <TextInput
                 label="Animal"
                 placeholder="Carpincho"
                 withAsterisk
                 value={animal}
+                maxLength={15}
                 onChange={setFieldValue(setAnimal)}
                 rightSection={(
                   <Tooltip label="Elegir al azar">
@@ -101,6 +106,7 @@ function App() {
                 placeholder="Extraviado"
                 withAsterisk
                 value={adjetivo}
+                maxLength={15}
                 onChange={setFieldValue(setAdjetivo)}
                 rightSection={(
                   <Tooltip label="Elegir al azar">
@@ -137,35 +143,6 @@ function App() {
               >
                 Elegir al azar
               </Button>
-            </Card>
-
-          </Grid.Col>
-          <Grid.Col xs={12}>
-            <Card
-              shadow="sm"
-              mt="md"
-              style={{backgroundColor: 'teal', borderWidth: 4}}
-              withBorder
-            >
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: "1em",
-              }}>
-                <IconArrowUpLeft color="white" size={48} />
-                <Text
-                  style={{whiteSpace: 'pre'}}
-                  align="center"
-                  color="white"
-                  transform='uppercase'
-                >
-                  {`${animal}\n${adjetivo}`}
-                </Text>
-                <Text color="white" size="xl">
-                  {kilometros}
-                </Text>
-              </div>
             </Card>
           </Grid.Col>
         </Grid>
