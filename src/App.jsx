@@ -3,16 +3,16 @@ import { ActionIcon, Button, Card, Center, Container, Grid, Text, TextInput, Too
 import { IconArrowsShuffle, IconCheck, IconDownload } from '@tabler/icons';
 import { pickRandom, randomBetween, setFieldValue } from './utils';
 import { Canvas } from './Canvas';
+import useFontFaceObserver from 'use-font-face-observer';
 
 const animales = [
-  "Oso Hormiguero",
+  "Oso",
   "Yaguareté",
   "Venado",
-  "Vicuña",
   "Yacaré",
   "Hornero",
   "Yarará",
-  "Cóndor Andino",
+  "Cóndor",
   "Armadillo",
   "Escuerzo",
   "Carpincho",
@@ -47,12 +47,15 @@ function App() {
   const [adjetivo, setAdjetivo] = useState('');
   const [kilometros, setKilometros] = useState('100');
   const [recentlyDownloaded, setRecentlyDownloaded] = useState(false);
+  const isFontLoaded = useFontFaceObserver([{
+    family: 'Roadgeek 2000 Series C',
+  }]);
   const canvasRef = useRef(null);
 
   useEffect(() => {
     setRandom();
   }, []);
-  
+
   function handleRandomPickClick() {
     setRandom();
   }
@@ -98,6 +101,7 @@ function App() {
               animal={animal}
               adjetivo={adjetivo}
               kilometros={kilometros}
+              canUpdate={isFontLoaded}
             />
           </Grid.Col>
           <Grid.Col xs={12}>
