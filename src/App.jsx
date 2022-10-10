@@ -96,16 +96,20 @@ function App() {
       <Container size="xs" py="md">
         <Grid>
           <Grid.Col xs={12}>
-            <Canvas
-              forwardedRef={canvasRef}
-              animal={animal}
-              adjetivo={adjetivo}
-              kilometros={kilometros}
-              canUpdate={isFontLoaded}
-            />
+            <Card shadow="sm" radius="md">
+              <Card.Section>
+                <Canvas
+                  forwardedRef={canvasRef}
+                  animal={animal}
+                  adjetivo={adjetivo}
+                  kilometros={kilometros}
+                  canUpdate={isFontLoaded}
+                />
+              </Card.Section>
+            </Card>
           </Grid.Col>
           <Grid.Col xs={12}>
-            <Card shadow="sm">
+            <Card shadow="sm" radius="md">
               <Text weight={700}>Generador de Localidades Ficticias 📍🇦🇷</Text>
               <Text color="dimmed">
                 Elegí uno al azar o armalo vos mismo! 👌
