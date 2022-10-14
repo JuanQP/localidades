@@ -93,9 +93,9 @@ function App() {
 
   return (
     <Center>
-      <Container size="xs" py="md">
+      <Container size="md" py="md">
         <Grid>
-          <Grid.Col xs={12}>
+          <Grid.Col xs={12} md={6}>
             <Card shadow="sm" radius="md">
               <Card.Section>
                 <Canvas
@@ -108,7 +108,7 @@ function App() {
               </Card.Section>
             </Card>
           </Grid.Col>
-          <Grid.Col xs={12}>
+          <Grid.Col xs={12} md={6}>
             <Card shadow="sm" radius="md">
               <Text weight={700}>Generador de Localidades Ficticias 📍🇦🇷</Text>
               <Text color="dimmed">
