@@ -1,6 +1,6 @@
 import { Image, Skeleton } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
-import cartel from "./assets/cartel.png";
+import cartel from "../assets/cartel.png";
 
 /**
  * https://stackoverflow.com/a/37511463

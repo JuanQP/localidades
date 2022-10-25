@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { ActionIcon, Button, Card, Center, Container, Grid, Text, TextInput, Tooltip } from "@mantine/core";
+import { Button, Card, Center, Container, Grid, Text } from "@mantine/core";
 import { IconArrowsShuffle, IconCheck, IconDownload } from '@tabler/icons';
 import { pickRandom, randomBetween, setFieldValue } from './utils';
-import { Canvas } from './Canvas';
+import { Canvas } from './components/Canvas';
 import useFontFaceObserver from 'use-font-face-observer';
+import { TextInputWithIcon } from './components/TextInputWithIcon';
 
 const animales = [
   "Oso",
@@ -110,55 +111,36 @@ function App() {
           </Grid.Col>
           <Grid.Col xs={12} md={6}>
             <Card shadow="sm" radius="md">
-              <Text weight={700}>Generador de Localidades Ficticias 📍🇦🇷</Text>
+              <Text weight={700}>
+                Generador de Localidades Ficticias 📍🇦🇷
+              </Text>
               <Text color="dimmed">
                 Elegí uno al azar o armalo vos mismo! 👌
               </Text>
-              <TextInput
+              <TextInputWithIcon
                 label="Animal"
                 placeholder="Carpincho"
-                withAsterisk
                 value={animal}
                 maxLength={15}
                 onChange={setFieldValue(setAnimal)}
-                rightSection={(
-                  <Tooltip label="Elegir al azar">
-                    <ActionIcon onClick={randomizeAnimal}>
-                      <IconArrowsShuffle size={18} />
-                    </ActionIcon>
-                  </Tooltip>
-                )}
-              />
-              <TextInput
+                onRandomize={randomizeAnimal}
+                />
+              <TextInputWithIcon
                 label="Adjetivo"
                 placeholder="Extraviado"
-                withAsterisk
                 value={adjetivo}
                 maxLength={15}
                 onChange={setFieldValue(setAdjetivo)}
-                rightSection={(
-                  <Tooltip label="Elegir al azar">
-                    <ActionIcon onClick={randomizeAdjetivo}>
-                      <IconArrowsShuffle size={18} />
-                    </ActionIcon>
-                  </Tooltip>
-                )}
-              />
-              <TextInput
-                maxLength={3}
-                inputMode="numeric"
+                onRandomize={randomizeAdjetivo}
+                />
+              <TextInputWithIcon
                 label="Kilómetros"
                 placeholder="120"
-                withAsterisk
                 value={kilometros}
+                maxLength={3}
+                inputMode="numeric"
                 onChange={setFieldValue(setKilometros)}
-                rightSection={(
-                  <Tooltip label="Elegir al azar">
-                    <ActionIcon onClick={randomizeKilometros}>
-                      <IconArrowsShuffle size={18} />
-                    </ActionIcon>
-                  </Tooltip>
-                )}
+                onRandomize={randomizeKilometros}
               />
               <Button
                 fullWidth
@@ -168,7 +150,7 @@ function App() {
                 size='md'
                 leftIcon={recentlyDownloaded ? <IconCheck size={18}/> : <IconDownload size={18} />}
                 onClick={handleDownloadCanvas}
-                >
+              >
                 {recentlyDownloaded ? "Listo!" : "Descargar"}
               </Button>
               <Button
