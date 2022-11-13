@@ -1,7 +1,11 @@
-import { ActionIcon, TextInput, Tooltip } from "@mantine/core";
+import { ActionIcon, TextInput, TextInputProps, Tooltip } from "@mantine/core";
 import { IconArrowsShuffle } from "@tabler/icons";
 
-export function TextInputWithIcon({ onRandomize, ...props }) {
+interface Props extends TextInputProps {
+  onRandomize: () => void;
+}
+
+export function TextInputWithIcon({ onRandomize, ...props }: Props) {
   return (
     <TextInput
       withAsterisk

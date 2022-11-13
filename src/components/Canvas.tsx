@@ -1,25 +1,32 @@
+import cartel from "@assets/cartel.png";
 import { Image, Skeleton } from "@mantine/core";
-import { useEffect, useRef, useState } from "react";
-import cartel from "../assets/cartel.png";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 
 /**
  * https://stackoverflow.com/a/37511463
  */
-function removeAccents(text = '') {
+function removeAccents(text: string) {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-export function Canvas({
-  animal = '',
-  adjetivo = '',
-  kilometros = '',
-  forwardedRef: canvasRef = null,
-  canUpdate = false,
-}) {
+interface Props {
+  animal: string;
+  adjetivo: string;
+  kilometros: string;
+  canUpdate: boolean;
+}
 
-  const imageRef = useRef(null);
-  const visibleImageRef = useRef(null);
+export const Canvas = forwardRef<HTMLCanvasElement, Props>(({
+  animal,
+  adjetivo,
+  kilometros,
+  canUpdate,
+}, ref) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const visibleImageRef = useRef<HTMLImageElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  useImperativeHandle(ref, () => canvasRef.current!);
 
   function updateCanvas() {
     if(!canvasRef.current || !imageRef.current) return;
@@ -32,6 +39,9 @@ export function Canvas({
     canvasRef.current.style.width = "100%";
     canvasRef.current.width = 700;
     canvasRef.current.height = 502;
+
+    if(ctx === null || visibleImageRef.current === null) return;
+
     ctx.drawImage(imageRef.current, 0, 0);
     ctx.font = "bold 30px 'Roadgeek 2000 Series C'";
     ctx.fillStyle = "#abb9bd";
@@ -102,4 +112,4 @@ export function Canvas({
       />
     </>
   )
-}
+})

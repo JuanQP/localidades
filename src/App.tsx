@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { pickRandom, randomBetween, setFieldValue } from '@/utils';
+import { Canvas, TextInputWithIcon } from '@components/index';
 import { Button, Card, Center, Container, Grid, Text } from "@mantine/core";
 import { IconArrowsShuffle, IconCheck, IconDownload } from '@tabler/icons';
-import { pickRandom, randomBetween, setFieldValue } from './utils';
-import { Canvas } from './components/Canvas';
+import { useEffect, useRef, useState } from 'react';
 import useFontFaceObserver from 'use-font-face-observer';
-import { TextInputWithIcon } from './components/TextInputWithIcon';
 
 const animales = [
   "Oso",
@@ -51,7 +50,7 @@ function App() {
   const isFontLoaded = useFontFaceObserver([{
     family: 'Roadgeek 2000 Series C',
   }]);
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     setRandom();
@@ -80,6 +79,8 @@ function App() {
   }
 
   function handleDownloadCanvas() {
+    if(!canvasRef.current) return;
+
     const url = canvasRef.current.toDataURL("image/png");
     const link = document.createElement("a");
     link.download = `Cartel_${animal}-${adjetivo}.png`;
@@ -100,7 +101,7 @@ function App() {
             <Card shadow="sm" radius="md">
               <Card.Section>
                 <Canvas
-                  forwardedRef={canvasRef}
+                  ref={canvasRef}
                   animal={animal}
                   adjetivo={adjetivo}
                   kilometros={kilometros}
